@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>スミケシ PDF｜PDF の個人情報を自動で見つけて黒塗り（アップロード不要）</title>
+  <meta name="description" content="PDF の中の氏名・住所・電話番号・メールアドレス・マイナンバー・カード番号などを自動で見つけて黒塗りする無料ツール。ファイルはサーバーに送らず、ブラウザの中だけで処理します。書き出した PDF は画像になるので、黒塗りの下の文字は残りません。">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+</head>
+<body>
+  <header class="topbar">
+    <h1>スミケシ PDF</h1>
+    <p class="tagline">日本語の個人情報を自動で見つけて黒塗り。<b>ファイルはブラウザの外に出ません。</b></p>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <section>
+        <label class="dropzone" id="dropzone">
+          <input type="file" id="fileInput" accept="application/pdf,.pdf" hidden>
+          <strong>PDFを選択</strong>
+          <span>またはここにドロップ</span>
+        </label>
+        <p class="filename" id="fileName"></p>
+        <p class="hint"><a href="samples/sample.pdf" id="sampleLink">サンプルの PDF で試す</a>（架空の申込書）</p>
+      </section>
+
+      <section>
+        <h2>検出する項目</h2>
+        <ul class="cats" id="cats"></ul>
+      </section>
+
+      <section>
+        <h2>キーワード（氏名など）</h2>
+        <textarea id="keywords" rows="3" placeholder="山田太郎, ヤマダタロウ&#10;（カンマか改行で区切る）"></textarea>
+        <button id="redetect" class="secondary" disabled>再検出</button>
+        <p class="hint">項目名（「氏名：」など）が付いていない名前は、自動では見つけられません。名前をここに入れてください。</p>
+      </section>
+
+      <section>
+        <h2>表示</h2>
+        <label class="toggle"><input type="checkbox" id="preview"> 黒塗りプレビュー</label>
+        <p class="hint">ページ上をドラッグすると手動で範囲を追加できます。枠をクリックすると黒塗りの ON / OFF を切り替えます。</p>
+      </section>
+
+      <section>
+        <button id="exportBtn" class="primary" disabled>黒塗りPDFを書き出す</button>
+        <p class="hint">書き出したPDFでは、各ページが画像になります。黒塗りの下の文字はデータとしても残りません（文字の選択・検索もできなくなります）。</p>
+      </section>
+
+      <section>
+        <h2>検出結果 <span id="totalCount"></span></h2>
+        <ul class="list" id="list"></ul>
+      </section>
+
+      <section class="about">
+        <h2>このツールについて</h2>
+        <p class="hint">PDF の読み込み・検出・黒塗り・書き出しは、すべてこのブラウザの中で行います。ファイルや中身がサーバーに送られることはありません。</p>
+        <p class="hint">自動の検出は見落とすことがあります。書き出す前に、必ず全ページを目で確かめてください。スキャンした画像の PDF は文字を読めないので、手動で囲ってください。</p>
+      </section>
+    </aside>
+
+    <main class="pages" id="pages">
+      <div class="empty" id="empty">PDFを読み込むと、ここにページが表示されます</div>
+    </main>
+  </div>
+
+  <div class="status" id="status" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>
