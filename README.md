@@ -56,3 +56,7 @@ python -m http.server 8765
 - 斜めに書かれた文字は、枠が少しずれることがあります
 
 `samples/sample.pdf` の名前・住所・電話番号・番号は、すべて架空のものです。
+
+## ライセンス
+
+[MIT License](LICENSE)
